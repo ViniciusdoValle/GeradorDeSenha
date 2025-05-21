@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gerador de Senhas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #121212;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #00ffcc;
+        }
+
+        input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            font-size: 16px;
+            margin: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #00ffcc;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #resultado {
+            margin-top: 20px;
+            font-size: 20px;
+            word-break: break-word;
+        }
+
+        #aviso {
+            color: #ff5050;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Gerador de Senhas</h1>
+        <label for="tamanho">Tamanho:</label>
+        <input type="number" id="tamanho" min="8" max="24" placeholder="Ex: 12" />
+        <br />
+        <button onclick="gerarSenha()">Gerar Senha</button>
+        <div id="aviso"></div>
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        function gerarSenha() {
+            const letras = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const numeros = "0123456789";
+            const simbolos = "!@#$%^&*()_-+=<>?{}[]|";
+            const tudo = letras + numeros + simbolos;
+
+            const input = document.getElementById("tamanho");
+            const aviso = document.getElementById("aviso");
+            const resultado = document.getElementById("resultado");
+
+            let tamanho = parseInt(input.value);
+
+            aviso.innerText = "";
+            resultado.innerText = "";
+
+            if (isNaN(tamanho)) {
+                tamanho = 12; // valor padrão se vazio
+            }
+
+            if (tamanho < 8 || tamanho > 24) {
+                aviso.innerText = "⚠️ O tamanho deve estar entre 8 e 24 caracteres.";
+                return;
+            }
+
+            let senha = "";
+            for (let i = 0; i < tamanho; i++) {
+                const randomIndex = Math.floor(Math.random() * tudo.length);
+                senha += tudo[randomIndex];
+            }
+
+            resultado.innerText = senha;
+        }
+    </script>
+</body>
+
+</html>
